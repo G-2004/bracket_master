@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bracket Master</title>
+
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+    
+    <div class="navBar">
+        <button id="open-form-btn">
+            Create Bracket
+        </button>
+    </div>
+
+    <div class="createSection hidden" id="create-section">
+        <h2>Create New Bracket</h2>
+        <input 
+        type="text"
+        id="bracket-name"
+        placeholder="Bracket Name"
+        />
+
+        <div class="uploadArea" id="upload-area">
+
+            <p>Drag & Drop Image Here</p>
+
+            <p>or</p>
+
+            <button type="button" id="select-image-btn">
+                Select Image
+            </button>
+
+            <input 
+                type="file"
+                id="thumbnail-file"
+                accept="image/*"
+                hidden
+            />
+
+        </div>
+
+        <img id="image-preview" hidden>
+
+        <button id="create-btn">
+            Create
+        </button>
+        
+    </div>
+
+    <div>
+        <h2>Existing Brackets</h2>
+        <div class="bracketGrid" id="bracket-grid"></div>
+
+        <p class="emptyMessage" id="empty-message">
+            No brackets yet.
+        </p>
+    </div>
+
+    <script src="assets/js/index.js"></script>
+</body>
+</html>
