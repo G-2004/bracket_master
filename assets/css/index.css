@@ -1,3 +1,5 @@
+/* GLOBAL */
+
 * {
     margin: 0;
     padding: 0;
@@ -8,19 +10,29 @@ body {
     background: #121212;
     color: white;
     font-family: Arial, sans-serif;
-    padding: 30px;
 }
+
+/* NAVBAR */
 
 .navBar {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
+    width: 100%;
+    height: 100px;
+
+    padding: 0 30px;
+
+    background: white;
 
     margin-bottom: 30px;
 }
 
 .navBar button {
     padding: 12px 18px;
+
     border: none;
     border-radius: 8px;
 
@@ -28,25 +40,29 @@ body {
     color: white;
 
     cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
 .navBar button:hover {
     background: #43a047;
 }
 
+/*CREATE SECTION */
+
 .createSection {
-    background: #1e1e1e;
-
-    padding: 20px;
-    border-radius: 12px;
-
-    margin-bottom: 40px;
-
     display: flex;
     flex-direction: column;
     gap: 15px;
 
-    max-width: 500px;
+    max-width: 600px;
+
+    margin: 30px;
+    padding: 30px;
+
+    background: #1e1e1e;
+
+    border-radius: 12px;
 }
 
 .createSection input {
@@ -69,6 +85,8 @@ body {
     color: white;
 
     cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
 .createSection button:hover {
@@ -79,54 +97,13 @@ body {
     display: none;
 }
 
-.bracketGrid {
-    display: grid;
-
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-
-    gap: 20px;
-
-    margin-top: 20px;
-}
-
-.bracketCard {
-    background: #1e1e1e;
-
-    border-radius: 12px;
-    overflow: hidden;
-
-    transition: transform 0.2s ease;
-
-    text-decoration: none;
-    color: white;
-}
-
-.bracketCard:hover {
-    transform: translateY(-5px);
-}
-
-.bracketCard img {
-    width: 100%;
-    height: 160px;
-
-    object-fit: cover;
-}
-
-.bracketInfo {
-    padding: 15px;
-}
-
-.emptyMessage {
-    margin-top: 20px;
-    opacity: 0.7;
-}
+/* UPLOAD AREA */
 
 .uploadArea {
-    border: 2px dashed #666;
-
-    border-radius: 12px;
-
     padding: 40px;
+
+    border: 2px dashed #666;
+    border-radius: 12px;
 
     text-align: center;
 
@@ -143,22 +120,205 @@ body {
 
 .uploadArea button {
     margin-top: 10px;
+}
 
-    padding: 10px 16px;
+#image-preview {
+    width: 100%;
+    max-width: 300px;
+
+    margin-top: 20px;
+
+    border-radius: 12px;
+}
+
+/* BRACKETS */
+
+.storedBrackets {
+    margin: 30px;
+    padding: 10px;
+}
+
+.bracketGrid {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+    gap: 20px;
+
+    margin-top: 20px;
+}
+
+.bracketCard {
+    position: relative;
+
+    overflow: hidden;
+
+    background: #1e1e1e;
+
+    border-radius: 12px;
+
+    color: white;
+    text-decoration: none;
+
+    transition: transform 0.2s ease;
+}
+
+.bracketCard:hover {
+    transform: translateY(-5px);
+}
+
+.bracketCard img {
+    width: 100%;
+    height: 160px;
+
+    object-fit: cover;
+}
+
+.bracketInfo {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px;
+}
+
+.emptyMessage {
+    margin-top: 20px;
+
+    opacity: 0.7;
+}
+
+/* MENU */
+
+.menuButton {
+    background: none;
 
     border: none;
 
-    border-radius: 8px;
+    color: white;
+
+    font-size: 20px;
 
     cursor: pointer;
 }
 
-#image-preview {
-    margin-top: 20px;
+.cardMenu {
+    display: none;
+    flex-direction: column;
 
+    position: absolute;
+
+    top: 50px;
+    right: 10px;
+
+    overflow: hidden;
+
+    background: #222;
+
+    border-radius: 8px;
+
+    z-index: 100;
+}
+
+.cardMenu.show {
+    display: flex;
+}
+
+.cardMenu button {
+    padding: 10px 16px;
+
+    border: none;
+
+    background: none;
+
+    color: white;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.cardMenu button:hover {
+    background: #333;
+}
+
+/* EDITING */
+
+.editTitleInput {
     width: 100%;
 
-    max-width: 300px;
+    padding: 8px;
 
-    border-radius: 12px;
+    border: none;
+    border-radius: 6px;
+
+    background: #333;
+
+    color: white;
+}
+
+.editableImage {
+    cursor: pointer;
+
+    opacity: 0.85;
+
+    transition: 0.2s ease;
+}
+
+.editableImage:hover {
+    opacity: 1;
+
+    filter: brightness(1.1);
+}
+
+.saveButton {
+    padding: 10px;
+
+    border: none;
+
+    background: #4caf50;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.dangerButton {
+    background: #c62828 !important;
+
+    color: white;
+}
+
+/*STATUS MESSAGE */
+
+#status-message {
+    position: fixed;
+
+    bottom: 20px;
+    right: 20px;
+
+    padding: 14px 18px;
+
+    background: #222;
+
+    color: white;
+
+    border-radius: 10px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translateY(10px);
+
+    transition: 0.2s ease;
+
+    z-index: 1000;
+}
+
+#status-message.show {
+    opacity: 1;
+
+    transform: translateY(0);
 }

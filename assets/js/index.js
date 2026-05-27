@@ -131,11 +131,15 @@ function createBracketCard(bracket) {
 
     card.classList.add("bracketCard");
 
+    //thumbnail
+
     const image = document.createElement("img");
 
     image.src = bracket.thumbnail;
 
     image.alt = bracket.name;
+
+    //info
 
     const info = document.createElement("div");
 
@@ -145,7 +149,167 @@ function createBracketCard(bracket) {
 
     title.textContent = bracket.name;
 
+    //menu button
+
+    const menuButton = document.createElement("button");
+
+    menuButton.classList.add("menuButton");
+
+    menuButton.textContent = "|";
+    
+
+    //dropdown menu
+
+    const menu = document.createElement("div");
+
+    menu.classList.add("cardMenu");
+
+    menu.classList.remove("show");
+
+    menu.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+    });
+
+    //internal buttons
+    const editButton = document.createElement("button");
+
+    editButton.textContent = "Edit";
+
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "Delete";
+
+    //menu events
+
+    menuButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        menu.classList.toggle("show");
+    });
+
+    document.addEventListener("click", () => {
+
+        menu.classList.remove("show");
+    });
+
+    //delete function
+    let deleteArmed = false;
+
+    deleteButton.addEventListener("click", () => {
+
+        // First click
+        if (!deleteArmed) {
+
+            deleteArmed = true;
+
+            deleteButton.textContent = "Confirm Delete";
+
+            deleteButton.classList.add("dangerButton");
+
+            return;
+        }
+
+        // Second click
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+
+        const store = transaction.objectStore(STORE_NAME);
+
+        store.delete(bracket.id);
+
+        transaction.oncomplete = () => {
+
+            loadBrackets();
+        };
+    });
+
+    deleteButton.addEventListener("mouseleave", () => {
+
+        deleteArmed = false;
+
+        deleteButton.textContent = "Delete";
+
+        deleteButton.classList.remove("dangerButton");
+    });
+
+    //edit function
+    editButton.addEventListener("click", () => {
+
+        card.classList.add("editing");
+
+        // name/title
+
+        const titleInput = document.createElement("input");
+
+        titleInput.type = "text";
+
+        titleInput.value = bracket.name;
+
+        titleInput.classList.add("editTitleInput");
+
+        info.replaceChild(titleInput, title);
+
+        // thumbnail
+
+        image.classList.add("editableImage");
+
+        image.title = "Click to change image";
+
+        let updatedThumbnail = bracket.thumbnail;
+
+        image.addEventListener("click", openImagePicker);
+
+        function openImagePicker() {
+
+            const tempInput = document.createElement("input");
+
+            tempInput.type = "file";
+
+            tempInput.accept = "image/*";
+
+            tempInput.click();
+
+            tempInput.onchange = async () => {
+
+                const file = tempInput.files[0];
+
+                if (!file) return;
+
+                updatedThumbnail = await fileToBase64(file);
+
+                image.src = updatedThumbnail;
+            };
+        }
+
+        // save changes
+
+        const saveButton = document.createElement("button");
+
+        saveButton.textContent = "Save";
+
+        saveButton.classList.add("saveButton");
+
+        menu.replaceChildren(saveButton, deleteButton);
+
+        saveButton.addEventListener("click", () => {
+
+            updateBracket(
+                bracket.id,
+                titleInput.value.trim(),
+                updatedThumbnail
+            );
+        });
+    });
+
+    // assemble card
+    menu.appendChild(editButton);
+
+    menu.appendChild(deleteButton);
+
     info.appendChild(title);
+
+    info.appendChild(menuButton);
+
+    info.appendChild(menu);
 
     card.appendChild(image);
 
@@ -188,6 +352,31 @@ function loadBrackets() {
     };
 }
 
+// ##### Update Bracket
+function updateBracket(id, name, thumbnail) {
+
+    const transaction = db.transaction(STORE_NAME, "readwrite");
+
+    const store = transaction.objectStore(STORE_NAME);
+
+    const request = store.get(id);
+
+    request.onsuccess = () => {
+
+        const bracket = request.result;
+
+        bracket.name = name;
+
+        bracket.thumbnail = thumbnail;
+
+        store.put(bracket);
+    };
+
+    transaction.oncomplete = () => {
+
+        loadBrackets();
+    };
+}
 // ##### OPEN FILE PICKER
 
 selectImageBtn.addEventListener("click", () => {
@@ -240,6 +429,8 @@ function setSelectedImage(file) {
     reader.onload = () => {
         imagePreview.src = reader.result;
         imagePreview.hidden = false;
+        //hopefully reset and allow same image to be loaded again
+        imageInput.value = "";
     };
 }
 // ##### LISTENERS

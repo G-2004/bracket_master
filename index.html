@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Bracket Master</title>
 
+    <link rel="icon" href="assets/images/favicon.png"> 
+
     <link rel="stylesheet" href="assets/css/index.css">
 </head>
 <body>
@@ -14,6 +16,8 @@
             Create Bracket
         </button>
     </div>
+
+    <div id="status-message"></div>
 
     <div class="createSection hidden" id="create-section">
         <h2>Create New Bracket</h2>
@@ -50,7 +54,7 @@
         
     </div>
 
-    <div>
+    <div class="storedBrackets">
         <h2>Existing Brackets</h2>
         <div class="bracketGrid" id="bracket-grid"></div>
 
