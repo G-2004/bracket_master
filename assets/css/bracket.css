@@ -1,0 +1,371 @@
+/* GLOBAL */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #121212;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+}
+
+/* NAVBAR */
+
+.navBar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 30px;
+
+    background: #1b1b1b;
+
+    border-bottom: 1px solid #2b2b2b;
+}
+
+.navCenter {
+    flex: 1;
+
+    text-align: center;
+}
+
+.backButton,
+.navBar button {
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #4caf50;
+
+    color: white;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.backButton:hover,
+.navBar button:hover {
+    background: #43a047;
+}
+
+/* HEADER */
+
+.bracketHeader {
+    display: flex;
+
+    gap: 25px;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+#bracket-thumbnail {
+    width: 220px;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+
+    background: #1e1e1e;
+}
+
+.bracketHeaderInfo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+#bracket-name {
+    font-size: 2rem;
+}
+
+#bracket-description {
+    opacity: 0.7;
+
+    max-width: 700px;
+
+    line-height: 1.5;
+}
+
+/* CONTROLS */
+
+.controlsSection {
+    display: flex;
+
+    gap: 15px;
+
+    padding: 0 30px 30px;
+}
+
+.controlsSection button {
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #4caf50;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.controlsSection button:hover {
+    background: #43a047;
+}
+
+/* MAIN LAYOUT */
+
+.mainLayout {
+    display: grid;
+
+    grid-template-columns: 350px 1fr;
+
+    gap: 30px;
+
+    padding: 0 30px 30px;
+}
+
+/* SECTION STYLES */
+
+.competitorsSection,
+.bracketSection {
+    background: #1b1b1b;
+
+    border-radius: 16px;
+
+    padding: 20px;
+}
+
+.sectionHeader {
+    margin-bottom: 20px;
+}
+
+.sectionHeader h2 {
+    font-size: 1.4rem;
+}
+
+/* COMPETITOR GRID*/
+
+.competitorGrid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.competitorCard {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 12px;
+
+    background: #242424;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.competitorCard:hover {
+    background: #2d2d2d;
+}
+
+.competitorCard img {
+    width: 70px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+}
+
+.competitorInfo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.competitorInfo p {
+    opacity: 0.7;
+
+    font-size: 0.9rem;
+}
+
+/* BRACKET VIEW */
+
+.bracketView {
+    min-height: 400px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.7;
+}
+
+/* EMPTY MSG */
+
+.emptyMessage {
+    opacity: 0.6;
+
+    margin-top: 15px;
+}
+
+/* MODAL */
+
+.modalOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: 1000;
+}
+
+.modal {
+    width: 90%;
+    max-width: 600px;
+
+    background: #1e1e1e;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+}
+
+.modalHeader {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.modalHeader button {
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+#modal-image {
+    width: 100%;
+    max-height: 320px;
+
+    object-fit: cover;
+}
+
+.modalContent {
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+#modal-description {
+    line-height: 1.6;
+
+    opacity: 0.8;
+}
+
+/* STATUS MSG */
+
+#status-message {
+    position: fixed;
+
+    bottom: 20px;
+    right: 20px;
+
+    padding: 14px 18px;
+
+    background: #222;
+
+    color: white;
+
+    border-radius: 10px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translateY(10px);
+
+    transition: 0.2s ease;
+
+    z-index: 2000;
+}
+
+#status-message.show {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* UTILITY */
+
+.hidden {
+    display: none;
+}
+
+/* MOBILE FRIENDLINESS */
+
+@media (max-width: 900px) {
+
+    .mainLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .bracketHeader {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    #bracket-thumbnail {
+        width: 100%;
+        height: 260px;
+    }
+}

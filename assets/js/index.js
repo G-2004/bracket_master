@@ -1,39 +1,13 @@
+import { openDatabase, STORE_NAME, getAllBrackets } from "./db.js";
 // ##### DATABASE
+openDatabase().then(() => {
 
-const DB_NAME = "BracketDB";
-const DB_VERSION = 1;
-const STORE_NAME = "brackets";
+        loadBrackets();
+    })
+    .catch((error) => {
 
-let db;
-
-// Open database
-const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-// Create on first opening
-request.onupgradeneeded = (event) => {
-
-    db = event.target.result;
-
-    if (!db.objectStoreNames.contains(STORE_NAME)) {
-
-        db.createObjectStore(STORE_NAME, {
-            keyPath: "id",
-            autoIncrement: true
-        });
-    }
-};
-
-// Database ready
-request.onsuccess = (event) => {
-
-    db = event.target.result;
-
-    loadBrackets();
-};
-
-request.onerror = (event) => {
-    console.error("IndexedDB error:", event.target.error);
-};
+        console.error(error);
+    });
 
 // ##### DOM ELEMENTS
 
@@ -155,7 +129,7 @@ function createBracketCard(bracket) {
 
     menuButton.classList.add("menuButton");
 
-    menuButton.textContent = "|";
+    menuButton.textContent = "\u22EE";//three vertical dots
     
 
     //dropdown menu
@@ -300,6 +274,11 @@ function createBracketCard(bracket) {
         });
     });
 
+    //redirect to bracket.html with bracket data
+    card.addEventListener("click", () => {
+        window.location.href = `bracket.html?id=${bracket.id}`;
+    });
+
     // assemble card
     menu.appendChild(editButton);
 
@@ -324,32 +303,20 @@ function loadBrackets() {
 
     bracketGrid.replaceChildren();
 
-    const transaction = db.transaction(STORE_NAME, "readonly");
+    getAllBrackets().then((brackets) => {
 
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.getAll();
-
-    request.onsuccess = () => {
-
-        const brackets = request.result;
-
-        if (brackets.length === 0) {
-
+        if (!brackets || brackets.length === 0) {
             emptyMessage.style.display = "block";
-
             return;
         }
 
         emptyMessage.style.display = "none";
 
         brackets.forEach((bracket) => {
-
             const card = createBracketCard(bracket);
-
             bracketGrid.appendChild(card);
         });
-    };
+    });
 }
 
 // ##### Update Bracket

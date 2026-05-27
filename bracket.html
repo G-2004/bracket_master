@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bracket</title>
+
+    <link rel="icon" href="assets/images/favicon.png"> 
+    <link rel="stylesheet" href="assets/css/bracket.css"/>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navBar">
+
+        <div class="navLeft">
+            <a href="index.html" class="backButton">
+                ← Back
+            </a>
+        </div>
+
+        <div class="navCenter">
+            <h1 id="bracket-title">Loading Bracket...</h1>
+        </div>
+
+        <div class="navRight">
+            <button id="edit-bracket-btn">Edit Bracket</button>
+        </div>
+
+    </header>
+
+    <!-- BRACKET HEADER -->
+    <section class="bracketHeader">
+
+        <img id="bracket-thumbnail" alt="Bracket Thumbnail" />
+
+        <div class="bracketHeaderInfo">
+            <h2 id="bracket-name">Bracket Name</h2>
+            <p id="bracket-description">Optional bracket description.</p>
+        </div>
+
+    </section>
+
+    <!-- CONTROLS -->
+    <section class="controlsSection">
+
+        <button id="add-competitor-btn">Add Competitor</button>
+        <button id="start-bracket-btn">Start Bracket</button>
+
+    </section>
+
+    <!-- COMPETITORS -->
+    <main class="mainLayout">
+
+        <section class="competitorsSection">
+
+            <div class="sectionHeader">
+                <h2>Competitors</h2>
+            </div>
+
+            <div class="competitorGrid" id="competitor-grid"></div>
+
+            <p class="emptyMessage" id="empty-competitors">
+                No competitors added.
+            </p>
+
+        </section>
+
+        <!-- BRACKET VIEW -->
+        <section class="bracketSection">
+
+            <div class="sectionHeader">
+                <h2>Tournament</h2>
+            </div>
+
+            <div class="bracketView" id="bracket-view"></div>
+
+            <p class="emptyMessage" id="empty-bracket">
+                Tournament has not started.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- COMPETITOR MODAL -->
+    <div class="modalOverlay hidden" id="competitor-modal">
+
+        <div class="modal">
+
+            <div class="modalHeader">
+                <h2 id="modal-title">Competitor</h2>
+                <button id="close-modal-btn">X</button>
+            </div>
+
+            <img id="modal-image" alt="Competitor Image" />
+
+            <div class="modalContent">
+                <h3 id="modal-name">Competitor Name</h3>
+                <p id="modal-description">Competitor description.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STATUS MESSAGE -->
+    <div id="status-message"></div>
+
+    <script type="module" src="assets/js/db.js"></script>
+    <script src="assets/js/bracket.js"></script>
+
+</body>
+</html>
