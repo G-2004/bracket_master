@@ -1,4 +1,4 @@
-import { openDatabase, STORE_NAME, getAllBrackets } from "./db.js";
+import { openDatabase, STORE_NAME, getAllBrackets, addBracket  } from "./db.js";
 // ##### DATABASE
 openDatabase().then(() => {
 
@@ -59,42 +59,25 @@ async function createBracket() {
 
     const name = nameInput.value.trim();
 
-    if (!name || !selectedImageFile) {
-
-        alert("Missing name or thumbnail!");
-
-        return;
-    }
+    if (!name || !selectedImageFile) return;
 
     const base64Image = await fileToBase64(selectedImageFile);
 
     const bracket = {
-
-        name: name,
-
+        name,
         thumbnail: base64Image,
-
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        competitors:[]
     };
 
-    const transaction = db.transaction(STORE_NAME, "readwrite");
+    await addBracket(bracket);
 
-    const store = transaction.objectStore(STORE_NAME);
+    nameInput.value = "";
+    imageInput.value = "";
+    selectedImageFile = null;
+    imagePreview.hidden = true;
 
-    store.add(bracket);
-
-    transaction.oncomplete = () => {
-
-        nameInput.value = "";
-
-        imageInput.value = "";
-
-        selectedImageFile = null;
-
-        imagePreview.hidden = true;
-
-        loadBrackets();
-    };
+    loadBrackets();
 }
 
 // ##### CREATE BRACKET CARD

@@ -49,7 +49,7 @@
 
     </section>
 
-    <!-- COMPETITORS -->
+        <!-- COMPETITORS -->
     <main class="mainLayout">
 
         <section class="competitorsSection">
@@ -58,7 +58,9 @@
                 <h2>Competitors</h2>
             </div>
 
-            <div class="competitorGrid" id="competitor-grid"></div>
+            <div class="competitorGrid" id="competitor-grid">
+                <!-- Competitor cards inserted here -->
+            </div>
 
             <p class="emptyMessage" id="empty-competitors">
                 No competitors added.
@@ -83,21 +85,49 @@
 
     </main>
 
-    <!-- COMPETITOR MODAL -->
-    <div class="modalOverlay hidden" id="competitor-modal">
+    <!-- ADD COMPETITOR MODAL -->
+    <div class="modalOverlay hidden" id="add-competitor-modal">
 
         <div class="modal">
 
             <div class="modalHeader">
-                <h2 id="modal-title">Competitor</h2>
-                <button id="close-modal-btn">X</button>
+
+                <h2>Add Competitor</h2>
+
+                <button id="close-add-modal-btn">
+                    X
+                </button>
+
             </div>
 
-            <img id="modal-image" alt="Competitor Image" />
-
             <div class="modalContent">
-                <h3 id="modal-name">Competitor Name</h3>
-                <p id="modal-description">Competitor description.</p>
+
+                <input
+                    type="text"
+                    id="competitor-name-input"
+                    placeholder="Competitor Name"
+                />
+
+                <textarea
+                    id="competitor-description-input"
+                    placeholder="Description"
+                ></textarea>
+
+                <input
+                    type="file"
+                    id="competitor-image-input"
+                    accept="image/*"
+                />
+
+                <img
+                    id="competitor-preview"
+                    hidden
+                />
+
+                <button id="save-competitor-btn">
+                    Save Competitor
+                </button>
+
             </div>
 
         </div>
@@ -108,7 +138,7 @@
     <div id="status-message"></div>
 
     <script type="module" src="assets/js/db.js"></script>
-    <script src="assets/js/bracket.js"></script>
+    <script type="module" src="assets/js/bracket.js"></script>
 
 </body>
 </html>
