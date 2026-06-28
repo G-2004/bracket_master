@@ -1,4 +1,11 @@
-import { openDatabase, STORE_NAME, getAllBrackets, addBracket  } from "./db.js";
+import {
+    openDatabase,
+    STORE_NAME,
+    getAllBrackets,
+    addBracket,
+    updateBracket,
+    deleteBracket
+} from "./db.js";
 // ##### DATABASE
 openDatabase().then(() => {
 
@@ -10,6 +17,10 @@ openDatabase().then(() => {
     });
 
 // ##### DOM ELEMENTS
+
+const importBracketBtn = document.getElementById("import-bracket-btn");
+
+const importBracketInput = document.getElementById("import-bracket-input");
 
 const createBtn = document.getElementById("create-btn");
 
@@ -67,7 +78,8 @@ async function createBracket() {
         name,
         thumbnail: base64Image,
         createdAt: Date.now(),
-        competitors:[]
+        competitors:[],
+        matches: []
     };
 
     await addBracket(bracket);
@@ -152,31 +164,18 @@ function createBracketCard(bracket) {
     //delete function
     let deleteArmed = false;
 
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", async (e) => {
+        e.stopPropagation();
 
-        // First click
         if (!deleteArmed) {
-
             deleteArmed = true;
-
             deleteButton.textContent = "Confirm Delete";
-
             deleteButton.classList.add("dangerButton");
-
             return;
         }
 
-        // Second click
-        const transaction = db.transaction(STORE_NAME, "readwrite");
-
-        const store = transaction.objectStore(STORE_NAME);
-
-        store.delete(bracket.id);
-
-        transaction.oncomplete = () => {
-
-            loadBrackets();
-        };
+        await deleteBracket(bracket.id);
+        loadBrackets();
     });
 
     deleteButton.addEventListener("mouseleave", () => {
@@ -203,6 +202,10 @@ function createBracketCard(bracket) {
 
         titleInput.classList.add("editTitleInput");
 
+        titleInput.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
         info.replaceChild(titleInput, title);
 
         // thumbnail
@@ -214,6 +217,11 @@ function createBracketCard(bracket) {
         let updatedThumbnail = bracket.thumbnail;
 
         image.addEventListener("click", openImagePicker);
+
+        image.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openImagePicker();
+        });
 
         function openImagePicker() {
 
@@ -247,13 +255,15 @@ function createBracketCard(bracket) {
 
         menu.replaceChildren(saveButton, deleteButton);
 
-        saveButton.addEventListener("click", () => {
+        saveButton.addEventListener("click", async (e) => {
+            e.stopPropagation();
 
-            updateBracket(
-                bracket.id,
-                titleInput.value.trim(),
-                updatedThumbnail
-            );
+            bracket.name = titleInput.value.trim();
+            bracket.thumbnail = updatedThumbnail;
+
+            await updateBracket(bracket);
+
+            loadBrackets();
         });
     });
 
@@ -302,31 +312,6 @@ function loadBrackets() {
     });
 }
 
-// ##### Update Bracket
-function updateBracket(id, name, thumbnail) {
-
-    const transaction = db.transaction(STORE_NAME, "readwrite");
-
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.get(id);
-
-    request.onsuccess = () => {
-
-        const bracket = request.result;
-
-        bracket.name = name;
-
-        bracket.thumbnail = thumbnail;
-
-        store.put(bracket);
-    };
-
-    transaction.oncomplete = () => {
-
-        loadBrackets();
-    };
-}
 // ##### OPEN FILE PICKER
 
 selectImageBtn.addEventListener("click", () => {
@@ -391,3 +376,53 @@ openFormBtn.addEventListener("click", () => {
 
     createSection.classList.toggle("hidden");
 });
+
+importBracketBtn.addEventListener("click", () => {
+    importBracketInput.click();
+});
+
+importBracketInput.addEventListener(
+    "change",
+    async (event) => {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        try {
+            const text = await file.text();
+
+            const bracket = JSON.parse(text);
+
+            await importBracket(bracket);
+
+        } catch (err) {
+            console.error(err);
+            alert("Invalid bracket file.");
+        }
+
+        importBracketInput.value = "";
+    }
+);
+
+async function importBracket(bracket) {
+    if (
+        typeof bracket.name !== "string" ||
+        !Array.isArray(bracket.competitors) ||
+        !Array.isArray(bracket.matches)
+    ) {
+        throw new Error("Invalid bracket format");
+    }
+
+    // Don't reuse existing DB id
+    delete bracket.id;
+
+    // Optional safety defaults
+    bracket.createdAt ??= Date.now();
+    bracket.competitors ??= [];
+    bracket.matches ??= [];
+
+    await addBracket(bracket);
+
+    loadBrackets();
+}

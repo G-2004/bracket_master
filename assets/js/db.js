@@ -145,3 +145,16 @@ export function updateBracket(bracket) {
         };
     });
 }
+
+export async function deleteBracket(id) {
+    const db = await openDatabase();
+
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+
+        tx.objectStore(STORE_NAME).delete(id);
+
+        tx.oncomplete = resolve;
+        tx.onerror = reject;
+    });
+}

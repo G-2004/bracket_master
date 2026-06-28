@@ -151,6 +151,7 @@ body {
     border-radius: 16px;
 
     padding: 20px;
+    position: relative;
 }
 
 .sectionHeader {
@@ -196,6 +197,8 @@ body {
 .competitorCard img {
     width: 70px;
     height: 70px;
+    min-width: 70px;
+    min-height: 70px;
 
     object-fit: cover;
 
@@ -217,13 +220,15 @@ body {
 }
 
 /* BRACKET VIEW */
-
 .bracketView {
     min-height: 400px;
+    position: relative;
+    overflow: visible;
 
-    display: flex;
+    display: block;
 
-    align-items: center;
+    gap: 40px;
+    align-items: flex-start;
     justify-content: center;
 
     opacity: 0.7;
@@ -368,4 +373,244 @@ body {
         width: 100%;
         height: 260px;
     }
+}
+
+/*UNSORTED*/
+.matchCard {
+
+    position: absolute;
+
+    background: #1e1e1e;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    z-index: 1;
+}
+
+.matchPlayer {
+
+    background: #2a2a2a;
+
+    padding: 10px;
+
+    border-radius: 8px;
+}
+
+.roundColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 280px;
+}
+
+.matchCard {
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.matchPlayer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    background: #2a2a2a;
+
+    padding: 10px;
+
+    margin: 4px 0;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.selectedCompetitor {
+    outline: 2px solid #4a90e2;
+    transform: scale(1.02);
+}
+
+.matchPlayer img {
+    width: 70px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+}
+
+.matchPlayerName {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+#bracket-view {
+    position: relative;
+}
+
+#bracket-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;   /* IMPORTANT */
+}
+.winnerSlot {
+    background-color: #cfc66d;
+}
+
+.competitorDeleteBtn {
+    margin-left: auto;
+
+    background: none;
+    border: none;
+
+    color: #ffffff;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+.competitorDeleteBtn:hover {
+    color: #e74c3c;
+}
+
+.competitorSaveBtn {
+    margin-left: auto;
+
+    background: none;
+    border: none;
+
+    color: #ffffff;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+.competitorSaveBtn:hover {
+    color: #4165b3;
+}
+
+.competitorCard input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.competitorActions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.competitorTextBox {
+    width: 100%;
+    padding: 8px 10px;
+
+    background-color: #3a3a3a;
+    border: 1px solid #4a4a4a;
+
+    border-radius: 8px;
+
+    color: white;
+    font-size: 1rem;
+
+    outline: none;
+}
+
+.competitorTextBox:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.25);
+}
+
+.editableImage {
+    transition: 0.3s ease-in-out;
+}
+.editableImage:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.55);
+}
+
+.bracketSection {
+    overflow-x: auto;
+}
+
+#bracket-view {
+    min-width: max-content;
+}
+
+#competitor-search {
+    width: 100%;
+    padding: 10px 12px;
+
+    background: #242424;
+    border: 1px solid #333;
+
+    border-radius: 10px;
+
+    color: white;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    margin-bottom: 15px;
+
+    transition: 0.2s ease;
+}
+
+#competitor-search::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#competitor-search:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    background: #2a2a2a;
+}
+
+.contextMenu {
+    position: fixed;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 8px;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 140px;
+}
+
+.contextMenu button {
+    background: #2a2a2a;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.contextMenu button:hover {
+    background: #3a3a3a;
+}
+
+.hidden {
+    display: none;
 }
