@@ -15,3 +15,6 @@ unfortunately no notes were taken prior to 6/3/2026 despite starting work in May
         -unnecessary console.log calls
 6/28/2026
     -whoops stopped note taking. git update today.
+7/14/2026
+    Added:
+        -clear winner right click function

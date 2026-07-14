@@ -518,6 +518,17 @@ function clearDownstream(match) {
         renderBracket();
     });
 
+document.getElementById("clear-winner").addEventListener("click", async () => {
+    if (!contextTargetMatch) return;
+
+    clearDownstream(contextTargetMatch);
+
+    slotContextMenu.classList.add("hidden");
+
+    await saveBracket();
+    renderBracket();
+});
+
 function slot(match, competitor) {
     //create slot div
     const div = document.createElement("div");
